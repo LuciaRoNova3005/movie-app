@@ -1,5 +1,6 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
+const movies = require("./data/movies.json");
 
 // create and config server
 const server = express();
