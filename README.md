@@ -1,4 +1,4 @@
-# Ejercicio de Netflix
+# Ejercicio de Netflix IN PROGRESS
 
 ### Cómo arrancar el backend
 
