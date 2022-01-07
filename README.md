@@ -16,4 +16,4 @@ En la raíz del proyecto:
 1. Ejecutar `cd web`.
 1. Ejecutar `npm install`.
 1. Ejecutar `npm start` o `npm run dev`.
-1. Abrir la página http://localhost:3000
+1. Abrir la página http://localhost:3000.
