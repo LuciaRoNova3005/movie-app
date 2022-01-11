@@ -7,7 +7,7 @@ En la raíz del proyecto:
 1. Ejecutar `npm install`.
 1. Ejecutar `npm start` o `npm run dev`.
 
-El backend se arrancará en http://localhost:4000
+El backend se arrancará en http://localhost:4000.
 
 ### Cómo ejecutar el frontend
 
