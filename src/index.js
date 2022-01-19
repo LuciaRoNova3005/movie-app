@@ -13,15 +13,40 @@ server.listen(serverPort, () => {
   console.log(`Server listening at http://localhost:${serverPort}`);
 });
 server.get("/users", (req, res) => {
-  const filterByGender = req.query.gender;
-  const filteredmovies = movies.filter((movie) => {
-    return filterByGender === ""
-      ? movie
-      : movie.gender.includes(filterByGender);
+  // filter
+  let filteredByGenderMovies = [];
+  if (req.query.gender === "") {
+    filteredByGenderMovies = movies;
+  } else {
+    filteredByGenderMovies = movies.filter(
+      (movie) => movie.gender === req.query.gender
+    );
+  }
+  // sort
+  const sort = req.query.sort === "desc" ? "desc" : "asc";
+
+  const sortedMovies = filteredByGenderMovies.sort((movieA, movieB) => {
+    if (sort === "asc") {
+      if (movieA.title < movieB.title) {
+        return -1;
+      } else if (movieA.title > movieB.title) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } else {
+      if (movieA.title < movieB.title) {
+        return 1;
+      } else if (movieA.title > movieB.title) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
   });
-  const response = {
+
+  res.json({
     success: true,
-    movies: filteredmovies,
-  };
-  res.json(response);
+    movies: sortedMovies,
+  });
 });
