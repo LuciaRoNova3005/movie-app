@@ -7,6 +7,9 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
+// set template engine middlewares
+app.set("view engine", "ejs");
+
 // init express aplication
 const serverPort = 4000;
 server.listen(serverPort, () => {
