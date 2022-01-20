@@ -8,7 +8,6 @@ server.use(cors());
 server.use(express.json());
 
 // set template engine middlewares
-app.set("view engine", "ejs");
 
 // init express aplication
 const serverPort = 4000;
@@ -28,7 +27,7 @@ server.get("/users", (req, res) => {
   // sort
   const sort = req.query.sort === "asc" ? "desc" : "asc";
   const sortedMovies = filteredByGenderMovies.sort((movieA, movieB) => {
-    if (sort === "asc") {
+    if (sort === "desc") {
       if (movieA.title < movieB.title) {
         return -1;
       } else if (movieA.title > movieB.title) {
