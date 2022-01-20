@@ -23,7 +23,6 @@ server.get("/users", (req, res) => {
     );
   }
   // sort
-
   const sort = req.query.sort === "asc" ? "desc" : "asc";
   const sortedMovies = filteredByGenderMovies.sort((movieA, movieB) => {
     if (sort === "asc") {
