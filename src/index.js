@@ -14,6 +14,10 @@ const serverPort = 4000;
 server.listen(serverPort, () => {
   console.log(`Server listening at http://localhost:${serverPort}`);
 });
+//CONFIGURAR SERVIDOR DE ESTÁTICOS
+const staticServerPath = "./src/public-react";
+server.use(express.static(staticServerPath));
+
 server.get("/users", (req, res) => {
   // filter
   let filteredByGenderMovies = [];
