@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const movies = require("./data/movies.json");
+const Database = require("better-sqlite3");
 
 // create and config server
 const server = express();
@@ -17,6 +17,20 @@ server.listen(serverPort, () => {
 //CONFIGURAR SERVIDOR DE ESTÁTICOS
 const staticServerPath = "./src/public-react";
 server.use(express.static(staticServerPath));
+
+//CONFIGURAR BASE DE DATOS
+const db = new Database("./src/db/database.db", {
+  verbose: console.log,
+});
+
+//TOMA PELICULAS DE BASE DE DATOS
+server.get("/movies", (req, res) => {
+  //SELECCIONAR QUERY
+  const query = db.prepare(`SELECT * FROM movies`);
+  //EJECUTAR QUERY
+  const responseBD = query.all();
+  res.json({ movies: responseBD });
+});
 
 server.get("/users", (req, res) => {
   // filter
