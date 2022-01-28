@@ -35,8 +35,12 @@ server.get("/movies", (req, res) => {
 });
 
 server.get("/users", (req, res) => {
+  const query = db.prepare(`SELECT * FROM movies`);
+  //EJECUTAR QUERY
+  const responseBD = query.all();
+  res.json({ movies: responseBD });
   // filter
-  let filteredByGenderMovies = [];
+  //let filteredByGenderMovies = [];
   if (req.query.gender === "") {
     filteredByGenderMovies = movies;
   } else {
