@@ -35,43 +35,68 @@ server.get("/movies", (req, res) => {
 });
 
 server.get("/users", (req, res) => {
+  //SELECCIONAR QUERY
   const query = db.prepare(`SELECT * FROM movies`);
-  //EJECUTAR QUERY
   const responseBD = query.all();
-  res.json({ movies: responseBD });
-  // filter
-  //let filteredByGenderMovies = [];
-  if (req.query.gender === "") {
-    filteredByGenderMovies = movies;
-  } else {
-    filteredByGenderMovies = movies.filter(
-      (movie) => movie.gender === req.query.gender
+  const genderFilterParam = req.query.gender;
+  const sortFilter = req.query.sort;
+  //EJECUTAR QUERY
+  if (genderFilterParam !== "") {
+    const query = db.prepare(
+      `SELECT * FROM movies WHERE gender =? ORDER BY name ${sortFilter}`
     );
-  }
-  // sort
-  const sort = req.query.sort === "asc" ? "desc" : "asc";
-  const sortedMovies = filteredByGenderMovies.sort((movieA, movieB) => {
-    if (sort === "desc") {
-      if (movieA.title < movieB.title) {
-        return -1;
-      } else if (movieA.title > movieB.title) {
-        return 1;
-      } else {
-        return 0;
-      }
-    } else {
-      if (movieA.title < movieB.title) {
-        return 1;
-      } else if (movieA.title > movieB.title) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
-  });
+    const foundFilm = query.all(genderFilterParam);
 
-  res.json({
-    success: true,
-    movies: sortedMovies,
-  });
+    console.log(foundFilm);
+    res.json({ success: true, movies: foundFilm });
+  } else {
+    const queryAll = db.prepare(
+      `SELECT*FROM movies ORDER BY name ${sortFilter}`
+    );
+    const allMovies = queryAll.all();
+
+    res.json({ success: true, movies: allMovies });
+  }
 });
+
+// server.get("/users", (req, res) => {
+//   const query = db.prepare(`SELECT * FROM movies`);
+//   //EJECUTAR QUERY
+//   const responseBD = query.all();
+//   res.json({ movies: responseBD });
+//   // filter
+//   let filteredByGenderMovies = [];
+//   if (req.query.gender === "") {
+//     filteredByGenderMovies = movies;
+//   } else {
+//     filteredByGenderMovies = movies.filter(
+//       (movie) => movie.gender === req.query.gender
+//     );
+//   }
+//   // sort
+//   const sort = req.query.sort === "asc" ? "desc" : "asc";
+//   const sortedMovies = filteredByGenderMovies.sort((movieA, movieB) => {
+//     if (sort === "desc") {
+//       if (movieA.title < movieB.title) {
+//         return -1;
+//       } else if (movieA.title > movieB.title) {
+//         return 1;
+//       } else {
+//         return 0;
+//       }
+//     } else {
+//       if (movieA.title < movieB.title) {
+//         return 1;
+//       } else if (movieA.title > movieB.title) {
+//         return -1;
+//       } else {
+//         return 0;
+//       }
+//     }
+//   });
+
+//   res.json({
+//     success: true,
+//     movies: sortedMovies,
+//   });
+// });
